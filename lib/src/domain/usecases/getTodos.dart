@@ -5,18 +5,16 @@ import 'package:clean_architecture_01/src/domain/repositories/todo_repository.da
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class GetTodos extends UseCase<List<TodoModel>, void> {
-  final TodoRepository _todoRepository;
+  final TodoRepository _toDoRepository;
   final StreamController<List<TodoModel>> _controller;
 
-  GetTodos(
-    this._todoRepository,
-  ) : _controller = StreamController.broadcast();
+  GetTodos(this._toDoRepository) : _controller = StreamController.broadcast();
 
   @override
   Future<Stream<List<TodoModel>?>> buildUseCaseStream(void params) async {
     try {
-      _todoRepository.getTodos().listen((List<TodoModel> contacts) {
-        if (!_controller.isClosed) _controller.add(contacts);
+      _toDoRepository.getTodos().listen((List<TodoModel> todos) {
+        if (!_controller.isClosed) _controller.add(todos);
       });
     } catch (error, stackTrace) {
       print(error);

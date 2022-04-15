@@ -12,13 +12,13 @@ class HomePresenter extends Presenter {
   HomePresenter(TodoRepository _todoRepository)
       : _getTodos = GetTodos(_todoRepository);
 
+  void getTodos() {
+    _getTodos.execute(_GetTodosObserver(this));
+  }
+
   @override
   void dispose() {
     _getTodos.dispose();
-  }
-
-  void getTodos() {
-    _getTodos.execute(_GetTodosObserver(this));
   }
 }
 
