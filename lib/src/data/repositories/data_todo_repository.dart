@@ -4,10 +4,6 @@ import 'package:clean_architecture_01/src/domain/entities/todo_model.dart';
 import 'package:clean_architecture_01/src/domain/repositories/todo_repository.dart';
 
 class DataTodoRepository implements TodoRepository {
-  static final _instance = DataTodoRepository._internal();
-  DataTodoRepository._internal();
-  factory DataTodoRepository() => _instance;
-
   StreamController<List<TodoModel>> _streamController =
       StreamController.broadcast();
 
