@@ -1,3 +1,4 @@
+import 'package:clean_architecture_01/src/app/pages/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
