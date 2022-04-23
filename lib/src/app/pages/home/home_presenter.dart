@@ -1,19 +1,29 @@
 import 'package:clean_architecture_01/src/domain/entities/todo_model.dart';
 import 'package:clean_architecture_01/src/domain/repositories/todo_repository.dart';
-import 'package:clean_architecture_01/src/domain/usecases/getTodos.dart';
+import 'package:clean_architecture_01/src/domain/usecases/get_todos.dart';
+import 'package:clean_architecture_01/src/domain/usecases/remove_todo.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class HomePresenter extends Presenter {
   late Function getTodosOnNext;
   late Function getTodosOnError;
 
+  late Function removeTodoOnComplete;
+  late Function removeTodoOnError;
+
   final GetTodos _getTodos;
+  final RemoveToDo _removeToDo;
 
   HomePresenter(TodoRepository _todoRepository)
-      : _getTodos = GetTodos(_todoRepository);
+      : _getTodos = GetTodos(_todoRepository),
+        _removeToDo = RemoveToDo(_todoRepository);
 
   void getTodos() {
     _getTodos.execute(_GetTodosObserver(this));
+  }
+
+  void removeTodo(String todoId) {
+    _removeToDo.execute(_RemoveTodoObserver(this), RemoveToDoParams(todoId));
   }
 
   @override
@@ -39,4 +49,23 @@ class _GetTodosObserver extends Observer<List<TodoModel>> {
   void onNext(List<TodoModel>? response) {
     _presenter.getTodosOnNext(response);
   }
+}
+
+class _RemoveTodoObserver extends Observer<void> {
+  final HomePresenter _presenter;
+
+  _RemoveTodoObserver(this._presenter);
+
+  @override
+  void onComplete() {
+    _presenter.removeTodoOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    _presenter.removeTodoOnError(e);
+  }
+
+  @override
+  void onNext(_) {}
 }

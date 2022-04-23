@@ -26,6 +26,11 @@ class HomeController extends Controller {
     _presenter.getTodosOnError = (e) {};
   }
 
+  void removeTodo(String toDoId) {
+    _presenter.removeTodo(toDoId);
+    refreshUI();
+  }
+
   @override
   void dispose() {
     _presenter.dispose();
