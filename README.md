@@ -1,6 +1,6 @@
 # clean_architecture_01
 
-A new Flutter project.
+A new Flutter project for flutter_clean_architecture package basics.
 
 ## Getting Started
 
